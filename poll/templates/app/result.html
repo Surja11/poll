@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<div class="border p-4">
 <h1 class="text-center mb-5">{{question.question}}</h1>
 
 
@@ -16,6 +16,8 @@
   {%endfor%}
   </ul>
 
-  <a class="btn btn-secondary" href="{%url 'polls:index' %} "> Back to Polls</a>
+  <a class="btn btn-danger" href="{%url 'polls:index' %} "> Back to Polls</a>
   <a class="btn btn-dark" href="{% url 'polls:detail' question.id %}" >Vote again?</a>
-{% endblock %}
+
+</div>
+  {% endblock %}

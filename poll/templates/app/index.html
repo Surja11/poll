@@ -5,12 +5,12 @@
 
   {% if latest_questions %}
    {% for question in latest_questions%}
-    <div class = "card mb-3">
+    <div class = "card mb-3" >
       <div class="card-body">
         <p class="lead">{{ question.question }}
         </p>
-        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary btn-sn">Vote</a>
-        <a href="{% url 'polls:results' question.id %}" class="btn btn-primary btn-sn">Results</a>
+        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary btn-sn ">Vote</a>
+        <a href="{% url 'polls:results' question.id %}" class="btn btn-primary btn-sn float-end">Results</a>
       </div>
     </div>   
    {%endfor%}
