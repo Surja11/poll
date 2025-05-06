@@ -48,3 +48,8 @@ def vote(request, question_id):
     selected_choice.votes += 1
     selected_choice.save()
     return HttpResponseRedirect(reverse('polls:results', args = (question.id,)))
+
+def pollquestion(request):
+  poll_form = PollForm()
+  context = {'poll_form': poll_form}
+  return render(request, 'app/pollqn.html', context)

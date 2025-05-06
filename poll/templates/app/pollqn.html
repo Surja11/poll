@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{%block content%}
+<div class="border">
+<h1 class="text-center bg-primary p-3 text-white">Submit your poll</h1>
+<h5 class = "text-center p-3">Your poll will be posted if approved by admin.</h5>
+  <div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="col bg-white p-4 rounded shadow-sm">
+    <form action="" class="form">
+      {%for element in poll_form%}
+      <div class="form-group">
+    <label for="{{form.element.id_for_label}}">{{element.label}}</label>
+    <input type="{{element.field.widget.input_type}}" class="form-control" name="{{form.element.name}}" required id="{{form.element.id_for_label}}">
+      </div>
+    {%endfor%}
+  <div class="text-center">
+    <input type="submit" class="btn btn-primary my-2" value="Submit">
+    </div>
+    </form>
+  </div>
+  </div>
+</div>
+  {%endblock%}
