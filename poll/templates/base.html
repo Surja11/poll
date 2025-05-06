@@ -7,9 +7,22 @@
   <title>Poll {% block title %}{% endblock %}</title>
 </head>
 <body >
-  <div class="container" style="height: 100vh; display: flex; justify-content: center; align-items: center">
+  <header class="p-7">
+    <nav class="bg-primary text-center h4 d-flex justify-content-center align-items-center" style = "height: 5rem;">
+    <a class="mx-3 text-black text-decoration-none">Home</a> 
+    <a class="mx-3 text-black text-decoration-none">Request a Poll</a>
+    {% if user.is_authenticated %}
+    <a class="mx-3 text-black text-decoration-none">Logout</a>
+    {%else%}
+    <a class="mx-3 text-black text-decoration-none">Register</a>
+    <a class="mx-3 text-black text-decoration-none">Login</a>
+    {% endif %}
+    </nav>
+  </header>
+  <div class="container" style="height:90vh; margin-top: 2rem;display: flex; justify-content: center; align-items: center">
     <div class="row" >
-      <div class="col-md-8 m-auto" >
+      <div class="col-md-12 m-auto" >
+
         {%block content%}{%endblock%}
       </div>
     </div>
