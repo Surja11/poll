@@ -9,8 +9,12 @@
       <div class="card-body">
         <p class="lead">{{ question.question }}
         </p>
-        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary btn-sn ">Vote</a>
-        <a href="{% url 'polls:results' question.id %}" class="btn btn-primary btn-sn float-end">Results</a>
+        {%if user.is_authenticated %}
+        <a href="{% url 'polls:detail' question.id %}" class="btn btn-danger btn-sn ">Vote</a>
+        {%else%}
+        <a href="{% url 'polls:login'  %}" class="btn btn-danger btn-sn ">Vote</a>
+        {%endif%}
+        <a href="{% url 'polls:results' question.id %}" class="btn btn-success btn-sn float-end">Results</a>
       </div>
     </div>   
    {%endfor%}
