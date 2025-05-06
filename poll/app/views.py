@@ -2,9 +2,20 @@ from django.shortcuts import render,get_object_or_404
 from .models import *
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
+from .forms import *
 # Create your views here.
 
 #Get questions and display them
+def register(request):
+  register_form = RegisterForm()
+  context = {'register_form': register_form}
+  return render(request, 'app/register.html',context)
+
+def login(request):
+  login_form = LoginForm()
+  context = {'login_form': login_form}
+  return render(request, 'app/login.html', context)
+
 def index(request):
   latest_questions = Question.objects.order_by('-published_date')[:5];
 
