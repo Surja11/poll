@@ -15,3 +15,22 @@ class Choice(models.Model):
 
   def __str__(self):
     return self.choice
+
+class RequestedPoll(models.Model):
+
+  STATUS_CHOICES = [
+    ('pending' , 'Pending'),
+    ('approved', 'Approved'),
+    ('rejected', 'Rejected'),
+  ]
+
+  question  = models.CharField(max_length = 200)
+  choice1 = models.CharField(max_length=200)
+  choice2 = models.CharField(max_length = 200)
+  choice3 = models.CharField(max_length = 200)
+  request_date = models.DateTimeField(auto_now_add = True)
+  status = models.CharField(max_length = 10, choices = STATUS_CHOICES, default = 'pending')
+  admin_notes = models.TextField(blank = True)
+
+  def __str__(self):
+    return f"{self.question} (Status : {self.status})"

@@ -9,8 +9,8 @@
       {%csrf_token%}
       {%for element in poll_form%}
       <div class="form-group">
-    <label for="{{form.element.id_for_label}}">{{element.label}}</label>
-    <input type="{{element.field.widget.input_type}}" class="form-control" name="{{form.element.name}}" required id="{{form.element.id_for_label}}">
+    <label for="{{element.id_for_label}}">{{element.label}}</label>
+    <input type="{{element.field.widget.input_type}}" class="form-control" name="{{element.name}}" required id="{{element.id_for_label}}">
       </div>
     {%endfor%}
   <div class="text-center">

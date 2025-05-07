@@ -5,6 +5,7 @@ from django.urls import reverse
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 # Create your views here.
 
 #Get questions and display them
@@ -76,6 +77,19 @@ def vote(request, question_id):
 
 @login_required
 def pollquestion(request):
+  if request.method == "POST":
+    poll_form = PollForm(request.POST)
+    if poll_form.is_valid():
+      RequestedPoll.objects.create(
+        question = request.POST.get('question'),
+        choice1 = request.POST.get('choice1'),
+        choice2 = request.POST.get('choice2'),
+        choice3 = request.POST.get('choice3'),
+
+      )
+      messages.success(request, 'Your poll request has been submitted for approval')
+      return redirect('/')
+
   poll_form = PollForm()
   context = {'poll_form': poll_form}
   return render(request, 'app/pollqn.html', context)
