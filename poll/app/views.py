@@ -1,18 +1,41 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import *
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
 from .forms import *
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout, authenticate
 # Create your views here.
 
 #Get questions and display them
 def register(request):
-  register_form = RegisterForm()
+  if request.method == "POST":
+    register_form = RegisterForm(request.POST  or None)
+    print(register_form.errors)
+    if register_form.is_valid():
+      print("Form is valid")
+      user= register_form.save()
+      user.save()
+      login(request, user)
+      return redirect('/')
+      
+  else:
+    register_form = RegisterForm()
   context = {'register_form': register_form}
   return render(request, 'app/register.html',context)
 
-def login(request):
-  login_form = LoginForm()
+def loginuser(request):
+  if request.method == "POST":
+      
+      login_form = LoginForm(request, data = request.POST)
+      print(login_form.errors)
+      if login_form.is_valid():
+        print("Form is valid")
+        user = login_form.get_user()
+        login(request, user)
+        return redirect('/')
+  else:
+      login_form = LoginForm()
   context = {'login_form': login_form}
   return render(request, 'app/login.html', context)
 
@@ -24,6 +47,7 @@ def index(request):
   return render(request, 'app/index.html',context)
 
 # Show specific questions and choices
+@login_required
 def detail(request, question_id):
   try:
     question = Question.objects.get(pk = question_id)
@@ -36,6 +60,7 @@ def results(request,question_id):
   question = get_object_or_404(Question, pk = question_id)
   return render(request, 'app/result.html',{'question': question})
 
+@login_required
 def vote(request, question_id):
   #print(request.POST['choice'])
   question = get_object_or_404(Question, pk = question_id)
@@ -49,6 +74,7 @@ def vote(request, question_id):
     selected_choice.save()
     return HttpResponseRedirect(reverse('polls:results', args = (question.id,)))
 
+@login_required
 def pollquestion(request):
   poll_form = PollForm()
   context = {'poll_form': poll_form}

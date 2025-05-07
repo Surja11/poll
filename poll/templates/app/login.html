@@ -10,12 +10,13 @@
   <h1 class="text-center bg-primary text-white p-3 ">Login</h1>
   <div class="mt-5 container d-flex justify-content-center align-items-center">
     <div class="col-md-6 bg-white p-4 rounded shadow-sm">
-    <form action="" class="form">
+    <form action="" method="post"  class="form">
+      {%csrf_token%}
       {%for element in login_form%}
       <div class="mb-3">
     
-    <label for="{{form.element.id_for_label}}">{{element.label}}</label>
-    <input type="{{element.field.widget.input_type}}" class="form-control" name="{{form.element.name}}" required id="{{form.element.id_for_label}}">
+    <label for="{{element.id_for_label}}">{{element.label}}</label>
+    <input type="{{element.field.widget.input_type}}" class="form-control" name="{{element.name}}" required id="{{element.id_for_label}}">
       </div>
       {%endfor%}
       <div class="text-center">

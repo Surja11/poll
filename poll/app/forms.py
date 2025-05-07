@@ -1,15 +1,14 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+class RegisterForm(UserCreationForm):
+  email = forms.EmailField(required = True)
+  class Meta:
+    model = User
+    fields =['username', 'email', 'password1','password2']
 
-class RegisterForm(forms.Form):
-  first_name = forms.CharField()
-  last_name = forms.CharField()
-  email = forms.EmailField()
-  password = forms.CharField(widget = forms.PasswordInput)
-  password2 = forms.CharField(widget = forms.PasswordInput)
-
-class LoginForm(forms.Form):
-  email = forms.EmailField()
-  password = forms.CharField(widget = forms.PasswordInput)
+class LoginForm(AuthenticationForm):
+  username = forms.CharField(label = 'Email or Username')
   
 
 class PollForm(forms.Form):

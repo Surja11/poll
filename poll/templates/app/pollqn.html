@@ -5,7 +5,8 @@
 <h5 class = "text-center p-3">Your poll will be posted if approved by admin.</h5>
   <div class="container d-flex justify-content-center align-items-center mt-5">
     <div class="col bg-white p-4 rounded shadow-sm">
-    <form action="" class="form">
+    <form action="" class="form" method="post">
+      {%csrf_token%}
       {%for element in poll_form%}
       <div class="form-group">
     <label for="{{form.element.id_for_label}}">{{element.label}}</label>
