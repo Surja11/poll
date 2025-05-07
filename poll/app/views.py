@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from .models import *
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -12,9 +12,9 @@ from django.contrib import messages, auth
 def register(request):
   if request.method == "POST":
     register_form = RegisterForm(request.POST  or None)
-    print(register_form.errors)
+    # print(register_form.errors)
     if register_form.is_valid():
-      print("Form is valid")
+      # print("Form is valid")
       user= register_form.save()
       user.save()
       login(request, user)
@@ -29,9 +29,9 @@ def loginuser(request):
   if request.method == "POST":
       
       login_form = LoginForm(request, data = request.POST)
-      print(login_form.errors)
+      # print(login_form.errors)
       if login_form.is_valid():
-        print("Form is valid")
+        
         user = login_form.get_user()
         login(request, user)
         return redirect('/')
@@ -97,3 +97,15 @@ def pollquestion(request):
   poll_form = PollForm()
   context = {'poll_form': poll_form}
   return render(request, 'app/pollqn.html', context)
+
+
+
+def resultsData(request, question_id):
+  votedata = []
+  question = Question.objects.get(id = question_id)
+  votes = question.choice_set.all()
+  
+  for i in votes:
+    votedata.append({i.choice: i.votes})
+
+  return JsonResponse(votedata, safe = False)
