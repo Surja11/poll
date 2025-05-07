@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Question(models.Model):
   question = models.CharField(max_length = 200)
+  is_approved = models.BooleanField(default = False)
   published_date = models.DateTimeField('date published')
 
   def  __str__(self):

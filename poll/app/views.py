@@ -5,7 +5,7 @@ from django.urls import reverse
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
-from django.contrib import messages
+from django.contrib import messages, auth
 # Create your views here.
 
 #Get questions and display them
@@ -39,6 +39,10 @@ def loginuser(request):
       login_form = LoginForm()
   context = {'login_form': login_form}
   return render(request, 'app/login.html', context)
+
+def logout(request):
+  auth.logout(request)
+  return redirect('/')
 
 def index(request):
   latest_questions = Question.objects.order_by('-published_date')[:5];
