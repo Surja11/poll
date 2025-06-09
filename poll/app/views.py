@@ -69,15 +69,21 @@ def results(request,question_id):
 def vote(request, question_id):
   #print(request.POST['choice'])
   question = get_object_or_404(Question, pk = question_id)
+  user = request.user
   try:
     selected_choice = question.choice_set.get(pk = request.POST['choice'])
   except:
     return render(request, 'app/detail.html',{'question': question,  'error_message':  "You didn't select a choice",})
   
-  else: 
-    selected_choice.votes += 1
-    selected_choice.save()
-    return HttpResponseRedirect(reverse('polls:results', args = (question.id,)))
+  else:
+    if user in question.voted_user.all():
+      messages.error(request,"You have already voted")
+      return redirect('/')
+    else:
+      question.voted_user.add(user)
+      selected_choice.votes += 1
+      selected_choice.save()
+      return HttpResponseRedirect(reverse('polls:results', args = (question.id,)))
 
 @login_required
 def pollquestion(request):
